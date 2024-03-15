@@ -1,4 +1,5 @@
 #include <vector>
+#include <cmath>
 class VECTOR
 {
 public:
@@ -11,25 +12,25 @@ public:
   VECTOR(const VECTOR& other);
 
   // Copy assignment operator that performs a deep copy of the data.
-  VECTOR& operator=(VECTOR& other);
+  VECTOR& operator=(const VECTOR& other);
 
   // Destructor deallocates any memory used by the VECTOR object.
-  ~VECTOR() = default;
+  ~VECTOR();
 
   // Calculates and returns a unit vector (vector with magnitude 1) in the same direction as this vector.
   VECTOR unit_vector() const noexcept;
 
   // Vector addition. Performs element-wise addition with another VECTOR object.
-  VECTOR operator+(const VECTOR& other) const noexcept;
+  VECTOR operator+(const VECTOR& other) const;
 
   // Vector subtraction. Performs element-wise subtraction with another VECTOR object.
-  VECTOR operator-(const VECTOR& other) const noexcept;
+  VECTOR operator-(const VECTOR& other) const ;
 
   // Scalar multiplication. Multiplies all elements of the vector by a scalar value.
-  VECTOR operator*(double scalar) const noexcept;
+  VECTOR operator*(double scalar) const ;
 
   // Dot product (scalar product). Calculates the dot product between this vector and another VECTOR.
-  double operator*(const VECTOR& other) const noexcept;
+  double operator*(const VECTOR& other) const ;
 
   // Calculates the magnitude (length) of the vector.
   double magnitude() const noexcept;
