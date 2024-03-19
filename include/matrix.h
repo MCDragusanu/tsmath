@@ -1,6 +1,9 @@
+
+#pragma once
+
 #include <vector>
-
-
+#include <stdlib.h>
+#include <iostream>
 class MATRIX
 {
 public:
@@ -43,7 +46,7 @@ public:
   // Returns a specific column of the matrix as a VECTOR object.
   std::vector<double>* get_column(int index);
 
-// Returns a specific column of the matrix as a VECTOR object.
+  // Returns a specific column of the matrix as a VECTOR object.
   const std::vector<double> get_column_const(int index) const;
 
   // Returns the number of columns in the matrix.
@@ -51,6 +54,8 @@ public:
 
   // Returns the number of rows in the matrix.
   size_t getRowCount() const noexcept;
+
+  void print_matrix(std::ostream& buff) const noexcept;
 
 protected:
   // Internal data storage for the matrix elements.

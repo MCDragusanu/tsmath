@@ -1,4 +1,4 @@
-#include "vector.h"
+#include "../include/vector.h"
 
 VECTOR::VECTOR(const std::vector<double> &other) : m_components(other){};
 

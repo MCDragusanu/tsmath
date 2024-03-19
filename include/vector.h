@@ -1,5 +1,9 @@
+#pragma once
+
 #include <vector>
 #include <cmath>
+#include <stdlib.h>
+
 class VECTOR
 {
 public:

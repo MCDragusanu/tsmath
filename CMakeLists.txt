@@ -1,18 +1,22 @@
-cmake_minimum_required(VERSION 3.0)
-project(lin_alg)
+cmake_minimum_required(VERSION 3.10)
+project(tsmathlib)
 
-# Specify the build folder (modify "build" to your desired name)
-set(CMAKE_BUILD_TYPE DEBUG)  # Optional: Set build type (e.g., DEBUG, RELEASE)
-set(BUILD_FOLDER "build")     # Change "build" to your preferred name
+# Set C++ standard
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-# Find all source files
-file(GLOB source_files "*.cpp")
+# Add source files for the library
+file(GLOB LIB_SOURCES "src/*.cpp")
 
-# Create the build folder if it doesn't exist
-make_directory(${BUILD_FOLDER})
+# Create the static library target
+add_library(tsmath STATIC ${LIB_SOURCES})
 
-# Add an executable target that links all source files
-add_executable(lin_alg_exe ${source_files})
+# Add include directories for the library
+target_include_directories(tsmath PUBLIC include)
 
-# Set the build directory. This ensures the build results go to the specified folder.
-set_target_properties(lin_alg_exe PROPERTIES OUTPUT_DIRECTORY ${BUILD_FOLDER})
+# Optionally, add compile options or definitions
+# target_compile_options(mylib PRIVATE -Wall)
+
+# Install library and header files (optional)
+install(TARGETS tsmath DESTINATION lib)
+install(DIRECTORY include/ DESTINATION include)

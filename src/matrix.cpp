@@ -1,4 +1,4 @@
-#include "matrix.h"
+#include "../include/matrix.h"
 
 MATRIX::MATRIX(const std::vector<std::vector<double>> &buffer) : m_components(buffer)
 {
@@ -20,8 +20,12 @@ MATRIX::MATRIX(const MATRIX &other)
 {
     // Initialize the matrix components with appropriate dimensions
     m_components = std::vector<std::vector<double>>(
-        other.getRowCount(), std::vector<double>(other.getRowCount() == 0 ? 0 : other[0].size(), 0.0));
+        other.getRowCount(), std::vector<double>(other.getRowCount() == 0 ? 0 : other.m_components[0].size(), 0.0));
+ 
+    row_count = m_components.size();
 
+    column_count = m_components.size() == 0 ? 0 : m_components[0].size();
+  
     // Perform element-wise copy from 'other' matrix to the new matrix
     for (size_t i = 0; i < other.getRowCount(); i++)
     {
@@ -135,10 +139,10 @@ MATRIX MATRIX::operator*(double scalar) const noexcept
             C.m_components[k][i] = (this->m_components[k][i] * scalar);
         }
     }
-    return C;
+   return C;
 }
 
-MATRIX MATRIX::operator+(const MATRIX &other) const noexcept
+MATRIX MATRIX::operator+(const MATRIX &other) const 
 {
     size_t nA = this->row_count, mA = this->column_count;
 
@@ -162,7 +166,7 @@ MATRIX MATRIX::operator+(const MATRIX &other) const noexcept
     return C;
 }
 
-MATRIX MATRIX::operator-(const MATRIX &other) const noexcept
+MATRIX MATRIX::operator-(const MATRIX &other) const 
 {
     size_t nA = this->row_count, mA = this->column_count;
 
@@ -188,10 +192,12 @@ MATRIX MATRIX::operator-(const MATRIX &other) const noexcept
 
 MATRIX MATRIX::transpose() const noexcept
 {
+   
     size_t nA = this->row_count, mA = this->column_count;
-
+  
     // Initialize result matrix with appropriate dimensions for transposition
     MATRIX C = MATRIX(std::vector<std::vector<double>>(mA, std::vector<double>(nA, 0.0)));
+  
 
     // Perform matrix transposition
     for (size_t k = 0; k < nA; k++)
@@ -199,7 +205,9 @@ MATRIX MATRIX::transpose() const noexcept
         for (size_t i = 0; i < mA; i++)
         {
             C.m_components[k][i] = this->m_components[i][k];
+            
         }
+        
     }
     return C;
 }
@@ -250,4 +258,14 @@ size_t MATRIX::getColumnCount() const noexcept
 size_t MATRIX::getRowCount() const noexcept
 {
     return row_count;
+}
+void MATRIX::print_matrix(std::ostream& buff) const noexcept{
+    for (const auto& row : m_components){
+        buff << "[";
+        for(const auto& value : row){
+            buff << value << " ";
+        }
+        buff << "]\n";
+    }
+    
 }
