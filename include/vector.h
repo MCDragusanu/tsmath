@@ -3,7 +3,7 @@
 #include <vector>
 #include <cmath>
 #include <stdlib.h>
-
+#include <iostream>
 class VECTOR
 {
 public:
@@ -47,6 +47,17 @@ public:
 
   // Returns the number of elements (dimension) of the vector.
   size_t dimension() const noexcept;
+
+  void print_vector(std::ostream& out) const noexcept{
+        out << "[";
+        for(size_t i = 0 ; i < m_components.size() ; i++){
+           out << m_components[i];
+           if(i < m_components.size() -1){
+            out << " ";
+           }
+        }
+        out<<"]\n";
+  }
 protected:
     std::vector<double> m_components;
 };

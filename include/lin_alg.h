@@ -2,7 +2,7 @@
 #pragma once
 #include <stdlib.h>
 #include "matrix.h"
-#include "vector.h"
+
 
 // Namespace for solving linear systems
 namespace lin_systems {

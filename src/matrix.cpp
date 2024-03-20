@@ -1,5 +1,5 @@
 #include "../include/matrix.h"
-
+#include <conio.h>
 MATRIX::MATRIX(const std::vector<std::vector<double>> &buffer) : m_components(buffer)
 {
     // Set the row count of the matrix
@@ -21,11 +21,11 @@ MATRIX::MATRIX(const MATRIX &other)
     // Initialize the matrix components with appropriate dimensions
     m_components = std::vector<std::vector<double>>(
         other.getRowCount(), std::vector<double>(other.getRowCount() == 0 ? 0 : other.m_components[0].size(), 0.0));
- 
+
     row_count = m_components.size();
 
     column_count = m_components.size() == 0 ? 0 : m_components[0].size();
-  
+
     // Perform element-wise copy from 'other' matrix to the new matrix
     for (size_t i = 0; i < other.getRowCount(); i++)
     {
@@ -35,7 +35,6 @@ MATRIX::MATRIX(const MATRIX &other)
         }
     }
 }
-
 
 MATRIX &MATRIX::operator=(MATRIX &other)
 {
@@ -63,14 +62,12 @@ MATRIX &MATRIX::operator=(MATRIX &other)
     return *this;
 }
 
-
 MATRIX::~MATRIX()
 {
     m_components.clear();
 }
 
-
-std::vector<double> &MATRIX::get_row(int row_index)
+VECTOR &MATRIX::get_row(int row_index)
 {
     size_t n = m_components.size();
     bool index_is_valid = std::abs(row_index) < n;
@@ -80,10 +77,12 @@ std::vector<double> &MATRIX::get_row(int row_index)
         throw -1;
     }
 
-    return row_index < 0 ? m_components[n + row_index] : m_components[row_index];
+    auto result = std::vector<double>(m_components.at(row_index <0 ? n+row_index : row_index));
+
+    return *new VECTOR(std::move(result));
 }
 
-const std::vector<double> &MATRIX::get_row_const(int row_index) const
+const VECTOR &MATRIX::get_row_const(int row_index) const
 {
     size_t n = m_components.size();
     bool index_is_valid = std::abs(row_index) < n;
@@ -93,14 +92,16 @@ const std::vector<double> &MATRIX::get_row_const(int row_index) const
         throw -1;
     }
 
-    return row_index < 0 ? m_components.at(n + row_index) : m_components.at(row_index);
+    auto result = std::vector<double>(m_components.at(row_index <0 ? n+row_index : row_index));
+
+    return * new VECTOR(std::move(result));
 }
 
 MATRIX MATRIX::operator*(const MATRIX &other) const
 {
     // Get dimensions of both matrices
     size_t nA = this->row_count, mA = this->column_count, nB = other.row_count, mB = other.column_count;
-    
+
     // Check if matrices can be multiplied
     if (mA != nB)
     {
@@ -109,7 +110,7 @@ MATRIX MATRIX::operator*(const MATRIX &other) const
 
     // Initialize result matrix with appropriate dimensions
     MATRIX C = MATRIX(std::vector<std::vector<double>>(nA, std::vector<double>(mB, 0.0)));
-    
+
     // Perform matrix multiplication
     for (size_t k = 0; k < nA; k++)
     {
@@ -139,10 +140,10 @@ MATRIX MATRIX::operator*(double scalar) const noexcept
             C.m_components[k][i] = (this->m_components[k][i] * scalar);
         }
     }
-   return C;
+    return C;
 }
 
-MATRIX MATRIX::operator+(const MATRIX &other) const 
+MATRIX MATRIX::operator+(const MATRIX &other) const
 {
     size_t nA = this->row_count, mA = this->column_count;
 
@@ -166,7 +167,7 @@ MATRIX MATRIX::operator+(const MATRIX &other) const
     return C;
 }
 
-MATRIX MATRIX::operator-(const MATRIX &other) const 
+MATRIX MATRIX::operator-(const MATRIX &other) const
 {
     size_t nA = this->row_count, mA = this->column_count;
 
@@ -192,12 +193,11 @@ MATRIX MATRIX::operator-(const MATRIX &other) const
 
 MATRIX MATRIX::transpose() const noexcept
 {
-   
+
     size_t nA = this->row_count, mA = this->column_count;
-  
+
     // Initialize result matrix with appropriate dimensions for transposition
     MATRIX C = MATRIX(std::vector<std::vector<double>>(mA, std::vector<double>(nA, 0.0)));
-  
 
     // Perform matrix transposition
     for (size_t k = 0; k < nA; k++)
@@ -205,49 +205,62 @@ MATRIX MATRIX::transpose() const noexcept
         for (size_t i = 0; i < mA; i++)
         {
             C.m_components[k][i] = this->m_components[i][k];
-            
         }
-        
     }
     return C;
 }
 
-std::vector<double>* MATRIX::get_column(int index)
+VECTOR &MATRIX::get_column(int index)
 {
     size_t m = column_count;
     size_t n = row_count;
-    bool index_is_valid = std::abs(index) < m;
+    bool index_is_valid = abs( index  ) < m;
+
+    std::cout << m << " " << n << "\n";
+
     if (!index_is_valid)
     {
         throw -1;
     }
 
-    auto* result = new std::vector<double>(m, 0.0);
+    auto* result =  new std::vector<double>(n, 0.0);
 
+    this->print_matrix(std::cout);
     for (size_t i = 0; i < n; i++)
     {
-        (*result)[i] = m_components[i][(index < 0) * n + index];
+        
+        (*result)[i] = m_components[i][index < 0 ? m+index : index];
+        //std::cout <<result[i]<<"\n";
     }
-    return result;
+
+    auto vector = new VECTOR(std::move(*result));
+   
+    return *vector;
 }
 
-const std::vector<double> MATRIX::get_column_const(int index) const
+const VECTOR &MATRIX::get_column_const(int index) const
 {
     size_t m = column_count;
     size_t n = row_count;
-    bool index_is_valid = std::abs(index) < m;
+    bool index_is_valid =abs(index) < m;
     if (!index_is_valid)
     {
         throw -1;
     }
 
-     auto result =  std::vector<double>(m, 0.0);
+    auto* result =  new std::vector<double>(n, 0.0);
 
+    
     for (size_t i = 0; i < n; i++)
     {
-        (result)[i] = m_components.at(i).at((index < 0) * n + index);
+        
+        (*result)[i] = m_components.at(i).at( index <0 ? m+index : index);
+        //std::cout <<result[i]<<"\n";
     }
-    return result;
+
+    auto vector = new VECTOR(std::move(*result));
+  
+    return *vector;
 }
 
 size_t MATRIX::getColumnCount() const noexcept
@@ -259,13 +272,15 @@ size_t MATRIX::getRowCount() const noexcept
 {
     return row_count;
 }
-void MATRIX::print_matrix(std::ostream& buff) const noexcept{
-    for (const auto& row : m_components){
+void MATRIX::print_matrix(std::ostream &buff) const noexcept
+{
+    for (const auto &row : m_components)
+    {
         buff << "[";
-        for(const auto& value : row){
+        for (const auto &value : row)
+        {
             buff << value << " ";
         }
         buff << "]\n";
     }
-    
 }
