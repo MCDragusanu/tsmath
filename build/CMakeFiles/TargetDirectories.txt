@@ -1,4 +1,0 @@
-C:/Users/Dragusanu Marius/Desktop/my_game_engine/tsmath/build/CMakeFiles/tsmath.dir
-C:/Users/Dragusanu Marius/Desktop/my_game_engine/tsmath/build/CMakeFiles/INSTALL.dir
-C:/Users/Dragusanu Marius/Desktop/my_game_engine/tsmath/build/CMakeFiles/ALL_BUILD.dir
-C:/Users/Dragusanu Marius/Desktop/my_game_engine/tsmath/build/CMakeFiles/ZERO_CHECK.dir
