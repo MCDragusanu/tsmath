@@ -4,11 +4,8 @@
 #include <cmath>
 #include <stdlib.h>
 #include <iostream>
-#pragma once
+#include <stdexcept>
 
-#include <vector>
-#include <cmath>
-#include <iostream>
 
 class Vector {
 public:
