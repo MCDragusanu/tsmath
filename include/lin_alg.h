@@ -2,18 +2,18 @@
 #pragma once
 #include <stdlib.h>
 #include "matrix.h"
-
+#include "macros.h"
 
 // Namespace for solving linear systems
 namespace lin_systems {
   // Solves a lower triangular linear system using forward substitution.
-  VECTOR ltris(const MATRIX &A, const VECTOR &b);
+  Vector ltris(const MATRIX &A, const Vector &b);
 
   // Solves an upper triangular linear system using backward substitution.
-  VECTOR utris(const MATRIX &A, const VECTOR &b);
+  Vector utris(const MATRIX &A, const Vector &b);
 
   // Solves a linear system using Gaussian elimination with partial pivoting.
-  VECTOR gpp(const MATRIX &A, const VECTOR &b);
+  Vector gpp(const MATRIX &A, const Vector &b);
 
   // Computes the inverse of a square matrix (if it exists).
   MATRIX inverse(const MATRIX& A);
@@ -46,19 +46,19 @@ namespace reflectors {
 // Namespace for solving least squares problems
 namespace lst_sqr {
   // Solves a least squares problem using the least squares method.
-  VECTOR lst_sqrs(const MATRIX& A, const VECTOR& b);
+  Vector lst_sqrs(const MATRIX& A, const Vector& b);
 }
 
-// Namespace for eigenvalue and eigenvector computations
+// Namespace for eigenvalue and eigenVector computations
 namespace eigen {
   // Performs Schur factorization of a matrix.
   MATRIX shurr_factorization(const MATRIX& A);
 
-  // Computes the eigenvectors of a matrix with eigenvectors as columns.
-  MATRIX eigen_vectors(const MATRIX& A);  
+  // Computes the eigenVectors of a matrix with eigenVectors as columns.
+  MATRIX eigen_Vectors(const MATRIX& A);  
 
   // Calculates the eigenvalues of a matrix.
-  VECTOR eigen_values(const MATRIX& A);
+  Vector eigen_values(const MATRIX& A);
   
   // Computes the determinant of a square matrix by using svd.
   double determinant(const MATRIX& A);
@@ -75,3 +75,7 @@ namespace svd {
   
 }
 
+namespace TSA {
+  Vector polynomial_division(Vector& p , const Vector& q ,   double tolerance = 1e-7);
+  Vector convolution(const Vector& u , const Vector& v, double tolerance = 1e-7);
+}

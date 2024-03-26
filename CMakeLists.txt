@@ -5,7 +5,6 @@ project(tsmathlib)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-# Add source files for the library
 file(GLOB LIB_SOURCES "src/*.cpp")
 
 # Create the static library target

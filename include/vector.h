@@ -4,60 +4,75 @@
 #include <cmath>
 #include <stdlib.h>
 #include <iostream>
-class VECTOR
-{
+#pragma once
+
+#include <vector>
+#include <cmath>
+#include <iostream>
+
+class Vector {
 public:
-  // Constructor that takes a constant reference to a std::vector<double>.
-  VECTOR(const std::vector<double>& buffer);
-  // Move constructor that efficiently transfers ownership of data from a temporary std::vector.
-  VECTOR(std::vector<double>&& buffer);
+  // Constructor using a constant reference to a std::vector<double>
+  explicit Vector(const std::vector<double>& data);
 
-  // Copy constructor that creates a deep copy of the data to avoid unintended side effects.
-  VECTOR(const VECTOR& other);
+  // Move constructor for efficient data transfer
+  Vector(std::vector<double>&& data);
 
-  // Copy assignment operator that performs a deep copy of the data.
-  VECTOR& operator=(const VECTOR& other);
+  // Constructor for creating a vector with a specific dimension and default value
+  Vector(size_t dimension, double initialValue = 0.0);
 
-  // Destructor deallocates any memory used by the VECTOR object.
-  ~VECTOR();
+  // Copy constructor for deep copying the data
+  Vector(const Vector& other);
 
-  // Calculates and returns a unit vector (vector with magnitude 1) in the same direction as this vector.
-  VECTOR unit_vector() const noexcept;
+  // Copy assignment operator for deep copying the data
+  Vector& operator=(const Vector& other);
 
-  // Vector addition. Performs element-wise addition with another VECTOR object.
-  VECTOR operator+(const VECTOR& other) const;
+  // Destructor to deallocate memory used by the Vector object
+  ~Vector();
 
-  // Vector subtraction. Performs element-wise subtraction with another VECTOR object.
-  VECTOR operator-(const VECTOR& other) const ;
+  // Calculates and returns a unit vector (magnitude 1) with the same direction
+  Vector unitVector() const noexcept;
 
-  // Scalar multiplication. Multiplies all elements of the vector by a scalar value.
-  VECTOR operator*(double scalar) const ;
+  // Vector addition (element-wise) with another Vector
+  Vector operator+(const Vector& other) const;
 
-  // Dot product (scalar product). Calculates the dot product between this vector and another VECTOR.
-  double operator*(const VECTOR& other) const ;
+  // Vector subtraction (element-wise) with another Vector
+  Vector operator-(const Vector& other) const;
 
-  // Calculates the magnitude (length) of the vector.
+   
+  // Scalar multiplication (multiply all elements by a scalar)
+  Vector operator*(double scalar) const;
+
+  // Dot product (scalar product) with another Vector
+  double operator *(const Vector& other) const;
+
+  // Calculates the magnitude (length) of the vector
   double magnitude() const noexcept;
 
-  // Returns a reference to the element at a specific index (allows modification).
+  // Returns a reference to the element at a specific index (modification)
   double& operator[](size_t index);
 
-  // Returns a const reference to the element at a specific index (read-only access).
+  // Returns a const reference to the element at a specific index (read-only)
   const double& operator[](size_t index) const;
 
-  // Returns the number of elements (dimension) of the vector.
+  // Returns the number of elements (dimension) of the vector
   size_t dimension() const noexcept;
 
-  void print_vector(std::ostream& out) const noexcept{
-        out << "[";
-        for(size_t i = 0 ; i < m_components.size() ; i++){
-           out << m_components[i];
-           if(i < m_components.size() -1){
-            out << " ";
-           }
-        }
-        out<<"]\n";
-  }
-protected:
-    std::vector<double> m_components;
+  // Inserts a value at the beginning of the vector
+  void pushFront(double value);
+
+  // Inserts a value at the end of the vector
+  void pushBack(double value);
+
+  // Removes the last element from the vector
+  void popBack();
+
+  // Removes the first element from the vector
+  void popFront();
+
+  // Prints the vector content to an output stream
+  void print(std::ostream& out) const noexcept;
+
+private:
+  std::vector<double> components;
 };

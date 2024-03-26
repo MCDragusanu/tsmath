@@ -67,7 +67,7 @@ MATRIX::~MATRIX()
     m_components.clear();
 }
 
-VECTOR &MATRIX::get_row(int row_index)
+Vector &MATRIX::get_row(int row_index)
 {
     size_t n = m_components.size();
     bool index_is_valid = std::abs(row_index) < n;
@@ -79,10 +79,10 @@ VECTOR &MATRIX::get_row(int row_index)
 
     auto result = std::vector<double>(m_components.at(row_index <0 ? n+row_index : row_index));
 
-    return *new VECTOR(std::move(result));
+    return *new Vector(std::move(result));
 }
 
-const VECTOR &MATRIX::get_row_const(int row_index) const
+const Vector &MATRIX::get_row_const(int row_index) const
 {
     size_t n = m_components.size();
     bool index_is_valid = std::abs(row_index) < n;
@@ -94,7 +94,7 @@ const VECTOR &MATRIX::get_row_const(int row_index) const
 
     auto result = std::vector<double>(m_components.at(row_index <0 ? n+row_index : row_index));
 
-    return * new VECTOR(std::move(result));
+    return * new Vector(std::move(result));
 }
 
 MATRIX MATRIX::operator*(const MATRIX &other) const
@@ -210,7 +210,7 @@ MATRIX MATRIX::transpose() const noexcept
     return C;
 }
 
-VECTOR &MATRIX::get_column(int index)
+Vector &MATRIX::get_column(int index)
 {
     size_t m = column_count;
     size_t n = row_count;
@@ -233,12 +233,12 @@ VECTOR &MATRIX::get_column(int index)
         //std::cout <<result[i]<<"\n";
     }
 
-    auto vector = new VECTOR(std::move(*result));
+    auto vector = new Vector(std::move(*result));
    
     return *vector;
 }
 
-const VECTOR &MATRIX::get_column_const(int index) const
+const Vector &MATRIX::get_column_const(int index) const
 {
     size_t m = column_count;
     size_t n = row_count;
@@ -258,7 +258,7 @@ const VECTOR &MATRIX::get_column_const(int index) const
         //std::cout <<result[i]<<"\n";
     }
 
-    auto vector = new VECTOR(std::move(*result));
+    auto vector = new Vector(std::move(*result));
   
     return *vector;
 }

@@ -23,10 +23,10 @@ public:
   ~MATRIX();
 
   // Returns a reference to the row at a specific index (allows modification).
-  VECTOR& get_row(int row_index);
+  Vector& get_row(int row_index);
 
   // Returns a const reference to the row at a specific index (read-only access).
-  const VECTOR& get_row_const(int row_index) const;
+  const Vector& get_row_const(int row_index) const;
 
   // Matrix multiplication. Performs matrix multiplication with another MATRIX object.
   MATRIX operator*(const MATRIX &other) const;
@@ -44,10 +44,10 @@ public:
   MATRIX transpose() const noexcept;
 
   // Returns a specific column of the matrix as a VECTOR object.
-  VECTOR& get_column(int index);
+  Vector& get_column(int index);
 
   // Returns a specific column of the matrix as a VECTOR object.
-  const VECTOR& get_column_const(int index) const;
+  const Vector& get_column_const(int index) const;
 
   // Returns the number of columns in the matrix.
   size_t getColumnCount() const noexcept;
